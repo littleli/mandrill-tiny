@@ -9,13 +9,13 @@ import java.lang.annotation.Target;
  * @author Ales Najmann
  * @version 1.0
  */
-public final class Categories {
+public final class Category {
 
     /**
      * This class is only a holder for particular Categories of Calls
      * It isn't supposed for instantiation
      */
-    private Categories() {
+    private Category() {
     }
 
     /**

@@ -27,10 +27,13 @@ public class MandrillFactory {
         this.httpHandler = httpHandler;
     }
 
-    public <T> T getInstance(Class<T> group) {
-        return group.cast(Proxy.newProxyInstance(group.getClassLoader(),
-                new Class<?>[]{group},
-                new ApiInvocationHandler(key, jsonHandler, httpHandler)));
+    public <T> T getService(Class<T> category) {
+        if (category.getDeclaringClass() == Category.class) {
+            return category.cast(Proxy.newProxyInstance(category.getClassLoader(),
+                    new Class<?>[]{category},
+                    new ApiInvocationHandler(key, jsonHandler, httpHandler)));
+        }
+        throw new IllegalArgumentException("Only interfaces declared in Categories class can be passed as arguments.");
     }
 
     /**
@@ -62,7 +65,7 @@ public class MandrillFactory {
 
         private final String key;
         private final JsonHandler jsonHandler;
-        private HttpHandler httpHandler;
+        private final HttpHandler httpHandler;
 
         ApiInvocationHandler(String key, JsonHandler jsonHandler, HttpHandler httpHandler) {
             this.key = key;
@@ -79,8 +82,8 @@ public class MandrillFactory {
                 for (int i = 0; i < args.length; i++) {
                     Annotation[] annotations = parameterAnnotations[i];
                     for (Annotation annotation : annotations) {
-                        if (annotation instanceof Categories.Param) {
-                            Categories.Param param = (Categories.Param) annotation;
+                        if (annotation instanceof Category.Param) {
+                            Category.Param param = (Category.Param) annotation;
                             params.put(param.value(), args[i]);
                         }
                     }
