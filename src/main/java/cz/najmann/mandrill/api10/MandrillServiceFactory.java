@@ -24,9 +24,13 @@ public final class MandrillServiceFactory {
 
     public <T> T getService(Class<T> category) {
         if (category.getDeclaringClass() == Category.class) {
-            return category.cast(Proxy.newProxyInstance(category.getClassLoader(),
+            T instance = category.cast(Proxy.newProxyInstance(category.getClassLoader(),
                     new Class<?>[]{category},
                     new ApiInvocationHandler(key, jsonHandler, httpHandler)));
+            if (instance != null) {
+                return instance;
+            }
+            throw new NullPointerException("Proxy instance has not been created.");
         }
         throw new IllegalArgumentException("Only interfaces declared in Categories class can be passed as arguments.");
     }
