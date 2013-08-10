@@ -7,7 +7,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import static cz.najmann.mandrill.api10.http.HttpHandlerHelp.close;
@@ -35,7 +34,7 @@ public final class HttpComponentsHandler implements HttpHandler {
             StatusLine statusLine = response.getStatusLine();
             inputStream = response.getEntity().getContent();
             return new SimpleResponse(statusLine.getStatusCode(), new String(readResponse(inputStream)));
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new MandrillError(e);
         } finally {
             close(inputStream);
