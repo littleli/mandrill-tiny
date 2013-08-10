@@ -6,7 +6,7 @@ import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.junit.After;
 
-public class JettyHttpAndJacksonTest extends BasicTemplateTest {
+public class JettyHttpAndJackson extends BasicTemplateTest {
 
     HttpClient httpc = new HttpClient(new SslContextFactory(false));
 
@@ -15,6 +15,7 @@ public class JettyHttpAndJacksonTest extends BasicTemplateTest {
         httpc.start();
         this.jsonHandler = new JacksonJsonHandler();
         this.httpHandler = new JettyHttpHandler(httpc);
+        initServiceFactory();
     }
 
     @After
