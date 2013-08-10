@@ -1,4 +1,4 @@
 language: java
 jdk:
   - openjdk7
-script: mvn install cobertura:cobertura coveralls:cobertura
+script: mvn test cobertura:cobertura coveralls:cobertura
