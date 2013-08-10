@@ -28,23 +28,8 @@ public final class HttpComponentsHandler implements HttpHandler {
             post.setEntity(new StringEntity(content, "UTF-8"));
             HttpResponse response = httpClient.execute(post);
             StatusLine statusLine = response.getStatusLine();
-
-            final int status = statusLine.getStatusCode();
-
             InputStream inputStream = response.getEntity().getContent();
-            final String incoming = new String(readResponse(inputStream));
-
-            return new SimpleResponse() {
-                @Override
-                public int getStatus() {
-                    return status;
-                }
-
-                @Override
-                public String getContent() {
-                    return incoming;
-                }
-            };
+            return new SimpleResponse(statusLine.getStatusCode(), new String(readResponse(inputStream)));
         } catch (IOException e) {
             throw new MandrillError(e);
         }

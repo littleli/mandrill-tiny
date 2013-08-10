@@ -15,6 +15,9 @@ public final class GsonJsonHandler implements JsonHandler {
     }
 
     public GsonJsonHandler(Gson gson) {
+        if (gson == null) {
+            throw new NullPointerException("Gson instance required");
+        }
         this.gson = gson;
     }
 

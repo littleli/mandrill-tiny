@@ -26,21 +26,8 @@ public final class URLConnectionHandler implements HttpHandler {
             urlConnection.setRequestProperty("Content-Type", "application/json");
             out = urlConnection.getOutputStream();
             out.write(content.getBytes("UTF-8"));
-
-            final int status = urlConnection.getResponseCode();
             in = new BufferedInputStream(urlConnection.getInputStream());
-            final String c = new String(readResponse(in));
-
-            return new SimpleResponse() {
-                @Override
-                public int getStatus() {
-                    return status;
-                }
-                @Override
-                public String getContent() {
-                    return c;
-                }
-            };
+            return new SimpleResponse(urlConnection.getResponseCode(), new String(readResponse(in)));
         } catch (IOException e) {
             throw new MandrillError(e);
         } finally {

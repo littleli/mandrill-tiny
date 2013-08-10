@@ -23,17 +23,7 @@ public final class JettyHttpHandler implements HttpHandler {
             response = httpClient.newRequest(uri)
                     .content(new StringContentProvider(content), "application/json")
                     .send();
-            return new SimpleResponse() {
-                @Override
-                public int getStatus() {
-                    return response.getStatus();
-                }
-
-                @Override
-                public String getContent() {
-                    return response.getContentAsString();
-                }
-            };
+            return new SimpleResponse(response.getStatus(), response.getContentAsString());
         } catch (Exception e) {
             throw new MandrillError(e);
         }

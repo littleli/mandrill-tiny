@@ -17,6 +17,9 @@ public final class JacksonJsonHandler implements JsonHandler {
     }
 
     public JacksonJsonHandler(ObjectMapper mapper) {
+        if (mapper == null) {
+            throw new NullPointerException("ObjectMapper instance required");
+        }
         this.mapper = mapper;
     }
 
