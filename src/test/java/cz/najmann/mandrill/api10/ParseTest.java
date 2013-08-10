@@ -1,5 +1,6 @@
 package cz.najmann.mandrill.api10;
 
+import cz.najmann.mandrill.api10.json.JsonError;
 import cz.najmann.mandrill.api10.json.JsonHandler;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +19,7 @@ public abstract class ParseTest {
     String trivial;
     String error;
     String arrayResponse;
+    String badJson;
 
     public String loadFile(String fn) throws IOException {
         InputStream is = null;
@@ -40,6 +42,7 @@ public abstract class ParseTest {
         trivial = loadFile("/trivial_response.json");
         error = loadFile("/error_response.json");
         arrayResponse = loadFile("/array_response.json");
+        badJson = loadFile("/bad_json.json");
     }
 
     @Test
@@ -49,7 +52,7 @@ public abstract class ParseTest {
     }
 
     @Test
-    public void testErrorInput() {
+    public void testErrorResponseInput() {
         Struct e = jsonHandler.fromJson(error, Struct.class);
         assertEquals(e.getValue("status", String.class), "error");
 
@@ -68,5 +71,10 @@ public abstract class ParseTest {
         assertEquals(1, ary.size());
         assertEquals("2013-01-01 15:30:27", ary.get(0).get("created_at"));
         assertEquals(42, ary.get(0).getValue("clicks", Number.class).longValue());
+    }
+
+    @Test(expected = JsonError.class)
+    public void testIncorredInputOnResponse() {
+        jsonHandler.fromJson(badJson, Struct.class);
     }
 }
