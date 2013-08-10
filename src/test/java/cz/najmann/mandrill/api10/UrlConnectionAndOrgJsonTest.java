@@ -9,5 +9,6 @@ public class UrlConnectionAndOrgJsonTest extends BasicTemplateTest {
     public void init() throws Exception {
         this.httpHandler = new URLConnectionHandler();
         this.jsonHandler = new OrgJsonHandler();
+        initServiceFactory();
     }
 }

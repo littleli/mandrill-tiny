@@ -19,7 +19,6 @@ public abstract class BasicTemplateTest {
     @Before
     public abstract void init() throws Exception;
 
-    @Before
     public void initServiceFactory() {
         serviceFactory = new MandrillServiceFactory(Constants.TEST_API_KEY, jsonHandler, httpHandler);
     }

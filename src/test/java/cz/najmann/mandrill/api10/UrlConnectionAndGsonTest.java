@@ -9,5 +9,6 @@ public class UrlConnectionAndGsonTest extends BasicTemplateTest {
     public void init() throws Exception {
         this.httpHandler = new URLConnectionHandler();
         this.jsonHandler = new GsonJsonHandler();
+        initServiceFactory();
     }
 }

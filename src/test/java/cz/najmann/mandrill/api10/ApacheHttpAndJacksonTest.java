@@ -12,5 +12,6 @@ public class ApacheHttpAndJacksonTest extends BasicTemplateTest {
         HttpClient httpClient = new DefaultHttpClient();
         httpHandler = new HttpComponentsHandler(httpClient);
         jsonHandler = new JacksonJsonHandler();
+        initServiceFactory();
     }
 }
