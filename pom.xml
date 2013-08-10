@@ -53,7 +53,6 @@
                 <version>2.0.0</version>
                 <configuration>
                     <serviceName>travis-ci</serviceName>
-                    <serviceJobId>${env.TRAVIS_JOB_ID}</serviceJobId>
                     <sourceEncoding>UTF-8</sourceEncoding>
                 </configuration>
             </plugin>
