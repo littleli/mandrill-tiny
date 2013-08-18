@@ -61,7 +61,7 @@ public class OrgJsonHandler implements JsonHandler {
         return s;
     }
 
-    private StructArray parse(StructArray arry, JSONArray a) throws JSONException{
+    private StructArray parse(StructArray arry, JSONArray a) throws JSONException {
         for (int i = 0, len = a.length(); i < len; i++) {
             Object val = a.get(i);
             if (val instanceof JSONObject) {
@@ -75,15 +75,25 @@ public class OrgJsonHandler implements JsonHandler {
 
     @Override
     public String toJson(Object o) {
-        if (o instanceof Collection) {
-            JSONArray array = new JSONArray((Collection) o);
-            return array.toString();
-        } else if (o instanceof Map) {
-            JSONObject obj = new JSONObject((Map) o);
-            return obj.toString();
-        } else {
-            JSONObject obj = new JSONObject(o);
-            return obj.toString();
+        try {
+            if (o == null) {
+                throw new NullPointerException();
+            } else if (o instanceof Collection) {
+                JSONArray array = new JSONArray((Collection) o);
+                return array.toString();
+            } else if (o instanceof Map) {
+                JSONObject obj = new JSONObject((Map) o);
+                return obj.toString();
+            } else if (o instanceof Double || o instanceof Float) {
+                return String.valueOf(((Number) o).doubleValue());
+            } else if (o instanceof Number) {
+                return String.valueOf(((Number) o).longValue());
+            } else if (o instanceof String) {
+                return (String) o;
+            }
+            throw new IllegalArgumentException("Type " + o.getClass().getSimpleName() + " not supported");
+        } catch (Exception e) {
+            throw new JsonError(e);
         }
     }
 }
