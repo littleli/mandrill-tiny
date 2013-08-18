@@ -18,7 +18,7 @@ There are compile time dependencies on a set of popular libraries:
 * [Apache HTTP Client](http://hc.apache.org)
 * [Jetty HTTP Client](http://download.eclipse.org/jetty/)
 
-But don't panic! It's for a very good reason. This project is very flexible in terms of runtime selection
+But don't panic! It's for a very good reason. This library is very flexible in terms of runtime selection
 of dependencies. It depends only on you which json serializer you want to use or which http client library
 gives you enough comfort. Use exclude in your app pom.xml.
 
@@ -28,7 +28,7 @@ org.json already available on Android platform.
 
 It is entirely on you. Isn't it amazing? :)
 
-Steps to use
+steps to use
 ------------
 
 For examples please see the couple of tests. It's not that awesome, but the philosophy is simple.
@@ -36,23 +36,24 @@ There are some simple steps to follow:
 
 * create instance of JsonHandler of your choice
 * create instance of HttpHandler of your choice
-* create instance of MandrillServiceFactory and pass your API key to it
-* ask for the implementation of service described as static inner interface from the Category class
-* use the calls as needed
+* create instance of MandrillServiceFactory and pass your API key, your JsonHandler and HttpHandler
+* ask for the implementation of service described as static inner interface of the Category class
+* use the calls as you will
 
-TODO
+todo
 ----
 
-Library is almost finished, but I would like to introduce few additional Builder classes just to increse comfort
-with Structs and StructArrays when creating specific Structs like recipient(list) and so on.
+* library is almost finished, but I would like to introduce few additional Builder classes just to increse comfort
+with Structs and StructArrays when creating specific Structs like recipient(list) and so on
+* make it's path to Maven Central repository
 
-Contribute
+contribute
 ----------
 
-Don't hesitate to write me, send patches or contact me. I'm keen to ideas.
+Don't hesitate to contact me, send patches or so. I'm keen to new ideas.
 
-License
+license
 -------
 
 This library uses LGPL v3 license. You can use it without limitations if you use it as it is for both free and
-commercial use. You can fork, it's completely fine, but please make your fork public. Thank you.
+commercial use. Feel free to fork, it's completely fine, but please keep your fork public. Thank you.
