@@ -17,13 +17,13 @@ public class OrgJsonTest extends ParseTest {
     }
 
     @Test
-    public void testVoid() {
+    public void testParseFromVoidAndNull() {
         assertNull(jsonHandler.fromJson("null", Void.class));
         assertNull(jsonHandler.fromJson("null", null));
     }
 
     @Test
-    public void testParseNumber() {
+    public void testNumberToJson() {
         assertEquals("1", jsonHandler.toJson(1L));
         assertEquals("1.2", jsonHandler.toJson(1.2));
     }
