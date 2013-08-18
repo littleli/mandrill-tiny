@@ -7,7 +7,7 @@ package cz.najmann.mandrill.api10;
  */
 public final class Error {
 
-    private String error;
+    private String status;
 
     private Long code;
 
@@ -15,12 +15,12 @@ public final class Error {
 
     private String message;
 
-    public String getError() {
-        return error;
+    public String getStatus() {
+        return status;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setStatus(String error) {
+        this.status = status;
     }
 
     public Long getCode() {
