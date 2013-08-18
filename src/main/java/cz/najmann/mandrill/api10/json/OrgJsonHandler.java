@@ -50,25 +50,16 @@ public class OrgJsonHandler implements JsonHandler {
     private Struct parse(Struct s, JSONObject o) throws JSONException {
         Iterator i = o.keys();
         while (i.hasNext()) {
-            Object genKey = i.next();
-            if (genKey instanceof String) {
-                String key = (String) genKey;
-                s.put(key, parse(o.get(key)));
-            } else {
-                throw new JSONException("Keys in json object should only consist of strings, right?");
-            }
+            String key = (String) i.next();
+            s.put(key, parse(o.get(key)));
         }
         return s;
     }
 
     private StructArray parse(StructArray arry, JSONArray a) throws JSONException {
-        for (int i = 0, len = a.length(); i < len; i++) {
-            Object val = a.get(i);
-            if (val instanceof JSONObject) {
-                arry.add(parse(new Struct(), (JSONObject) val));
-            } else {
-                throw new JSONException("Arrays in this case can only contain structs");
-            }
+        final int len = a.length();
+        for (int i = 0; i < len; i++) {
+            arry.add((Struct) parse(a.get(i)));
         }
         return arry;
     }
