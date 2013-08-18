@@ -21,7 +21,7 @@ public abstract class ParseTest {
     String arrayResponse;
     String badJson;
 
-    public String loadFile(String fn) throws IOException {
+    public static String loadFile(String fn) throws IOException {
         InputStream is = null;
         try {
             is = ParseTest.class.getResourceAsStream(fn);
