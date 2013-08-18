@@ -17,6 +17,9 @@ public final class MandrillServiceFactory {
     private final JsonHandler jsonHandler;
 
     public MandrillServiceFactory(String key, JsonHandler jsonHandler, HttpHandler httpHandler) {
+        if (key == null || jsonHandler == null || httpHandler == null) {
+            throw new NullPointerException("All arguments has to be instances");
+        }
         this.key = key;
         this.jsonHandler = jsonHandler;
         this.httpHandler = httpHandler;
@@ -24,13 +27,9 @@ public final class MandrillServiceFactory {
 
     public <T> T getService(Class<T> category) {
         if (category.getDeclaringClass() == Category.class) {
-            T instance = category.cast(Proxy.newProxyInstance(category.getClassLoader(),
+            return category.cast(Proxy.newProxyInstance(category.getClassLoader(),
                     new Class<?>[]{category},
                     new ApiInvocationHandler(key, jsonHandler, httpHandler)));
-            if (instance != null) {
-                return instance;
-            }
-            throw new NullPointerException("Proxy instance has not been created.");
         }
         throw new IllegalArgumentException("Only interfaces declared in Categories class can be passed as arguments.");
     }

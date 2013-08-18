@@ -10,6 +10,11 @@ import org.junit.Test;
 public class InitializeTest {
 
     @Test(expected = NullPointerException.class)
+    public void failedFactoryInit() {
+        new MandrillServiceFactory(null, null, null);
+    }
+
+    @Test(expected = NullPointerException.class)
     public void testGsonJsonHandler() {
         new GsonJsonHandler(null);
     }
