@@ -1,13 +1,22 @@
 package cz.najmann.mandrill.api10;
 
 import cz.najmann.mandrill.api10.http.HttpComponentsHandler;
-import cz.najmann.mandrill.api10.http.JettyHttpHandler;
 import cz.najmann.mandrill.api10.json.GsonJsonHandler;
 import cz.najmann.mandrill.api10.json.JacksonJsonHandler;
-import org.junit.Ignore;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 public class InitializeTest {
+
+    static int version;
+
+    @BeforeClass
+    public static void initBefore() {
+        version = Integer.valueOf(System.getProperty("java.version").replace(".", "").substring(0, 2));
+    }
 
     @Test(expected = NullPointerException.class)
     public void failedFactoryInit() {
@@ -29,9 +38,15 @@ public class InitializeTest {
         new HttpComponentsHandler(null);
     }
 
-    @Ignore
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testJettyHttpHandler() {
-        new JettyHttpHandler(null);
+        if (version >= 17) {
+            try {
+                new cz.najmann.mandrill.api10.http.JettyHttpHandler(null);
+                assertTrue(false);
+            } catch (NullPointerException e) {
+                assertNotNull(e);
+            }
+        }
     }
 }
