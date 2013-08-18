@@ -12,13 +12,6 @@ import java.lang.annotation.Target;
 public final class Category {
 
     /**
-     * This class is only a holder for particular Categories of Calls
-     * It isn't supposed for instantiation
-     */
-    private Category() {
-    }
-
-    /**
      * @link https://mandrillapp.com/api/docs/users.JSON.html
      */
     public static interface Users {
@@ -107,9 +100,9 @@ public final class Category {
          * Send a new transactional message through Mandrill
          *
          * @param message message struct with message details
-         * @param async
-         * @param ip_pool
-         * @param send_at
+         * @param async   send asynchronously?
+         * @param ip_pool the name of the ip pool
+         * @param send_at delivery date
          * @return array
          */
         StructArray send(@Param("message") Struct message,
@@ -125,7 +118,7 @@ public final class Category {
          * @param message          struct with message details
          * @param async            send the message asynchronously?
          * @param ip_pool          name of the ip pool
-         * @param send_at          date when to deliver
+         * @param send_at          delivery date
          * @return array
          */
         StructArray sendTemplate(@Param("template_name") String template_name,
@@ -138,12 +131,12 @@ public final class Category {
         /**
          * Search the content of recently sent messages and optionally narrow by date range, tags and senders
          *
-         * @param query
-         * @param date_from
-         * @param date_to
-         * @param tags
-         * @param senders
-         * @param limit
+         * @param query     query to execute
+         * @param date_from date from
+         * @param date_to   date to
+         * @param tags      an array with tags
+         * @param senders   an array of senders
+         * @param limit     limit
          * @return array
          */
         StructArray search(@Param("query") String query,
@@ -156,11 +149,11 @@ public final class Category {
         /**
          * Search the content of recently sent messages and return the aggregated hourly stats for matching messages
          *
-         * @param query
-         * @param date_from
-         * @param date_to
-         * @param tags
-         * @param senders
+         * @param query     query to execute
+         * @param date_from date from
+         * @param date_to   date to
+         * @param tags      an array of tags
+         * @param senders   an array of senders
          * @return array
          */
         StructArray searchTimeSeries(@Param("query") String query,
@@ -206,10 +199,23 @@ public final class Category {
                             @Param("ip_pool") String ip_pool,
                             @Param("send_at") String send_at);
 
+        /**
+         * @param to to
+         * @return array
+         */
         StructArray listScheduled(@Param("to") String to);
 
+        /**
+         * @param id the id of the job
+         * @return struct
+         */
         Struct cancelScheduled(@Param("id") String id);
 
+        /**
+         * @param id      the id of the job
+         * @param send_at date of redelivery
+         * @return struct
+         */
         Struct reschedule(@Param("id") String id,
                           @Param("sent_at") String send_at);
 
@@ -220,30 +226,30 @@ public final class Category {
         /**
          * Return the senders that have tried to use this account.
          *
-         * @return
+         * @return array
          */
         StructArray list();
 
         /**
          * Returns the sender domains that have been added to this account.
          *
-         * @return
+         * @return array
          */
         StructArray domains();
 
         /**
          * Return more detailed information about a single sender, including aggregates of recent stats
          *
-         * @param address
-         * @return
+         * @param address address
+         * @return struct
          */
         Struct info(@Param("address") String address);
 
         /**
          * Return the recent history (hourly stats for the last 30 days) for a sender
          *
-         * @param address
-         * @return
+         * @param address address
+         * @return array
          */
         StructArray timeSeries(@Param("address") String address);
     }
@@ -253,14 +259,14 @@ public final class Category {
         /**
          * Add a new template
          *
-         * @param name
-         * @param from_email
-         * @param from_name
-         * @param subject
-         * @param code
-         * @param text
-         * @param publish
-         * @return fluentStruct
+         * @param name       name of the template
+         * @param from_email from email address
+         * @param from_name  alias of the email address
+         * @param subject    email subject
+         * @param code       code
+         * @param text       email text
+         * @param publish    should be published?
+         * @return struct
          */
         Struct add(@Param("name") String name,
                    @Param("from_email") String from_email,
@@ -273,8 +279,8 @@ public final class Category {
         /**
          * Get the information for an existing template
          *
-         * @param name
-         * @return
+         * @param name name
+         * @return struct
          */
         Struct info(@Param("name") String name);
 
@@ -282,14 +288,14 @@ public final class Category {
          * Update the code for an existing template. If null is provided for any fields,
          * the values will remain unchanged.
          *
-         * @param name
-         * @param from_email
-         * @param from_name
-         * @param subject
-         * @param code
-         * @param text
-         * @param publish
-         * @return
+         * @param name       name of the template
+         * @param from_email from email address
+         * @param from_name  alias of the email address
+         * @param subject    email subject
+         * @param code       code
+         * @param text       email text
+         * @param publish    should be published?
+         * @return struct
          */
         Struct update(@Param("name") String name,
                       @Param("from_email") String from_email,
@@ -303,8 +309,8 @@ public final class Category {
          * Publish the content for the template. Any new messages sent using this template will start
          * using the content that was previously in draft.
          *
-         * @param name
-         * @return
+         * @param name name
+         * @return struct
          */
         Struct publish(@Param("name") String name);
 
@@ -312,22 +318,22 @@ public final class Category {
          * Delete a template
          *
          * @param name name
-         * @return fluentStruct
+         * @return struct
          */
         Struct delete(@Param("name") String name);
 
         /**
          * Return a list of all the templates available to this user
          *
-         * @return fluentArray
+         * @return array
          */
         StructArray list();
 
         /**
          * Return the recent history (hourly stats for the last 30 days) for a template
          *
-         * @param name
-         * @return
+         * @param name name
+         * @return array
          */
         StructArray timeSeries(@Param("name") String name);
 
@@ -377,7 +383,7 @@ public final class Category {
     public static interface Webhooks {
 
         /**
-         * Get the list of all webhooks defined on the account
+         * Get the list of all web hooks defined on the account
          *
          * @return array
          */
@@ -386,10 +392,10 @@ public final class Category {
         /**
          * Add a new webhook
          *
-         * @param url
-         * @param description
-         * @param events
-         * @return fluentStruct
+         * @param url         the url of the web hook
+         * @param description description of the web hook
+         * @param events      array of events
+         * @return struct
          */
         Struct add(@Param("url") String url,
                    @Param("description") String description,
@@ -398,19 +404,19 @@ public final class Category {
         /**
          * Given the ID of an existing webhook, return the data about it
          *
-         * @param id
-         * @return fluentStruct
+         * @param id id
+         * @return struct
          */
         Struct info(@Param("id") long id);
 
         /**
          * Update an existing webhook
          *
-         * @param id
-         * @param url
-         * @param description
-         * @param events
-         * @return fluentStruct
+         * @param id          id of the existing web hook
+         * @param url         the url of the web hook
+         * @param description description of the webhook
+         * @param events      array of events
+         * @return struct
          */
         Struct update(@Param("id") long id,
                       @Param("url") String url,
@@ -420,8 +426,8 @@ public final class Category {
         /**
          * Delete an existing webhook
          *
-         * @param id
-         * @return fluentStruct
+         * @param id id of the web hook
+         * @return struct
          */
         Struct delete(@Param("id") long id);
     }
@@ -433,8 +439,8 @@ public final class Category {
          * there is no reputation penalty for removing them from your blacklist. Attempting to blacklist an address
          * that has been whitelisted will have no effect.
          *
-         * @param email
-         * @return
+         * @param email email
+         * @return struct
          */
         Struct add(@Param("email") String email);
 
@@ -443,9 +449,9 @@ public final class Category {
          * Returns up to 1000 results. By default, entries that have expired are excluded from the results;
          * set include_expired to true to include them.
          *
-         * @param email
-         * @param include_expired
-         * @return
+         * @param email           email
+         * @param include_expired true if expired entries should be included
+         * @return array
          */
         StructArray list(@Param("email") String email,
                          @Param("include_expired") boolean include_expired);
@@ -454,8 +460,8 @@ public final class Category {
          * Deletes an email rejection. There is no limit to how many rejections you can remove from your blacklist,
          * but keep in mind that each deletion has an affect on your reputation.
          *
-         * @param email
-         * @return
+         * @param email email
+         * @return struct
          */
         Struct delete(@Param("email") String email);
     }
@@ -465,23 +471,23 @@ public final class Category {
         /**
          * Get the 100 most clicked URLs
          *
-         * @return
+         * @return array
          */
         StructArray list();
 
         /**
          * Return the 100 most clicked URLs that match the search query given
          *
-         * @param q
-         * @return
+         * @param q the search query
+         * @return array
          */
         StructArray search(@Param("q") String q);
 
         /**
          * Return the recent history (hourly stats for the last 30 days) for a url
          *
-         * @param url
-         * @return
+         * @param url url
+         * @return array
          */
         StructArray timeSeries(@Param("url") String url);
     }
@@ -494,15 +500,15 @@ public final class Category {
          * but the format of the archive is distinct for each job type. The api calls that initiate exports
          * include more details about the output format for that job type.
          *
-         * @param id
-         * @return fluentStruct
+         * @param id id
+         * @return struct
          */
         Struct info(@Param("id") String id);
 
         /**
          * Returns a list of your exports.
          *
-         * @return fluentArray
+         * @return array
          */
         StructArray list();
 
@@ -511,8 +517,8 @@ public final class Category {
          * archive containing a single file named rejects.csv that includes the following fields:
          * email, reason, detail, created_at, expires_at, last_event_at, expires_at.
          *
-         * @param notify_email email address to notify
-         * @return fluentStruct
+         * @param notify_email the email address to notify
+         * @return struct
          */
         Struct rejects(@Param("notify_email") String notify_email);
 
@@ -521,8 +527,8 @@ public final class Category {
          * zip archive containing a single file named whitelist.csv that includes the following
          * fields: email, detail, created_at.
          *
-         * @param notify_email
-         * @return fluentStruct
+         * @param notify_email the email to notify
+         * @return struct
          */
         Struct whitelist(@Param("notify_email") String notify_email);
 
@@ -534,13 +540,13 @@ public final class Category {
          * <p/>
          * If you have configured any custom metadata fields, they will be included in the exported data.
          *
-         * @param notify_email
-         * @param date_from
-         * @param date_to
-         * @param tags
-         * @param senders
-         * @param states
-         * @return
+         * @param notify_email notify email
+         * @param date_from    date from
+         * @param date_to      date to
+         * @param tags         array of tags
+         * @param senders      array of senders
+         * @param states       array of states
+         * @return struct
          */
         Struct activity(@Param("notify_email") String notify_email,
                         @Param("date_from") String date_from,
@@ -574,8 +580,8 @@ public final class Category {
          * @param raw_message    raw MIME message
          * @param to             recipient of the message
          * @param mail_from      senders email address
-         * @param helo
-         * @param client_address
+         * @param helo           helo
+         * @param client_address the client address
          * @return array
          */
         StructArray sendRaw(@Param("raw_message") String raw_message,
