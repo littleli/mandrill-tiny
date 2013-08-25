@@ -6,9 +6,9 @@
 
     <groupId>cz.najmann.mandrill</groupId>
     <artifactId>mandrill-tiny</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>mandril-tiny</name>
+    <name>mandrill-tiny</name>
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
