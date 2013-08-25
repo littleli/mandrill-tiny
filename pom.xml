@@ -7,6 +7,33 @@
     <groupId>cz.najmann.mandrill</groupId>
     <artifactId>mandrill-tiny</artifactId>
     <version>1.0.0</version>
+    <packaging>jar</packaging>
+    <name>mandril-tiny</name>
+    <description>
+    </description>
+    <licenses>
+        <license>
+            <name>The GNU Lesser General Public License, version 3.0 (LGPL-3.0)</name>
+            <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://github.com/littleli/mandrill-tiny</url>
+        <connection>scm:git:https://github.com/littleli/mandrill-tiny.git</connection>
+        <developerConnection>scm:git:https://github.com/littleli/mandrill-tiny.git</developerConnection>
+    </scm>
+    <developers>
+        <developer>
+            <id>littleli</id>
+            <name>Aleš Najmann</name>
+            <email>ales.najmann@gmail.com</email>
+            <roles>
+                <role>author</role>
+                <role>core developer</role>
+            </roles>
+        </developer>
+    </developers>
 
     <properties>
         <jetty.client.version>9.0.2.v20130417</jetty.client.version>
