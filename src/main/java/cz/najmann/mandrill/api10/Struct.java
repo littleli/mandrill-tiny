@@ -9,6 +9,13 @@ public final class Struct extends LinkedHashMap<String, Object> {
         return this;
     }
 
+    public Struct setNotNull(String name, Object o) {
+        if (o != null) {
+            this.put(name, o);
+        }
+        return this;
+    }
+
     public <T> T getValue(String name, Class<T> type) {
         return type.cast(super.get(name));
     }
