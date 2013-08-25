@@ -9,7 +9,15 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>mandril-tiny</name>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
     <description>
+        A Java super simple API library for the Mandrill email as a service platform.
     </description>
     <licenses>
         <license>
