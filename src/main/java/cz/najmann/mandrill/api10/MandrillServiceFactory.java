@@ -87,7 +87,7 @@ public final class MandrillServiceFactory {
 
             int status = response.getStatus();
             if (status < 200 || status > 299) {
-                throw new MandrillServiceError(status, jsonHandler.fromJson(response.getContent(), Error.class));
+                throw new MandrillServiceError(status, jsonHandler.fromJson(response.getContent(), MandrillServiceError.Error.class));
             }
 
             try {
