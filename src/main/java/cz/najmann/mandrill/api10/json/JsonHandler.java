@@ -1,10 +1,5 @@
 package cz.najmann.mandrill.api10.json;
 
-/**
- * User: littleli
- * Date: 4.8.13
- * Time: 22:20
- */
 public interface JsonHandler {
 
     /**
