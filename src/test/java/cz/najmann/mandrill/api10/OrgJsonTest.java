@@ -50,7 +50,7 @@ public class OrgJsonTest extends ParseTest {
 
     @Test(expected = JsonError.class)
     public void testUnexpectedToJson() {
-        Error error = new Error();
+        MandrillServiceError.Error error = new MandrillServiceError.Error();
         jsonHandler.toJson(error);
     }
 }
